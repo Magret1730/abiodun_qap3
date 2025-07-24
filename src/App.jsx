@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import NeighboursA from './components/NeighboursA';
+import NeighboursI from './components/Neighboursi';
 
 function App() {
   const [countries, setCountries] = useState([]);
   const [filteredCountries, setFilteredCountries] = useState([]);
   const [countryCodeToNameMap, setCountryCodeToNameMap] = useState({});
+  const [show, setShow] = useState(null); 
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -25,22 +28,6 @@ function App() {
     fetchCountries();
   }, []);
 
-  // Countries starting with A
-  // const countryStartingWithA = () => {
-  //   const filtered = countries.filter((country) =>
-  //     country.name.common.startsWith("A")
-  //   );
-  //   setFilteredCountries(filtered);
-  // };
-
-  // Countries starting with I
-  // const countryStartingWithI = () => {
-  //   const filtered = countries.filter((country) =>
-  //     country.name.common.startsWith("I")
-  //   );
-  //   setFilteredCountries(filtered);
-  // };
-
   const neighborCountryStartingWith = (letter) => {
     const filtered = countries.filter((country) => {
       if (!country.borders || country.borders.length === 0) return false;
@@ -52,6 +39,7 @@ function App() {
     });
   
     setFilteredCountries(filtered);
+    setShow(letter);
   }
 
   return (
@@ -63,33 +51,12 @@ function App() {
         <button onClick={() => neighborCountryStartingWith("I")}>NEIGHBOURS STARTING WITH I</button>
       </div>
 
-      <div className="country-grid">
-        {filteredCountries.map((country) => (
-          <div key={country.name.common} className="country-list">
-            <div>
-              <img src={country.flags.svg} alt={country.flags.alt} />
-            </div>
-            <div>
-              <li><strong>Official Country Name:</strong> {country.name.official} </li>
-              <li><strong>Capital Name:</strong> {country.capital}</li>
-              <li>
-                <strong>Neighboring Countries: </strong>
-                {country.borders && country.borders.length > 0 ? (
-                  <span>
-                    {country.borders.map((borderCode) => (
-                      <span key={borderCode}>
-                        {countryCodeToNameMap[borderCode] || borderCode}{", "}
-                      </span>
-                    ))}
-                  </span>
-                ) : (
-                  <span> None</span>
-                )}
-              </li>
-            </div>
-          </div>
-        ))}
-      </div>
+      {show === "A" && (
+        <NeighboursA countries={filteredCountries} countryCodeToNameMap={countryCodeToNameMap} />
+      )}
+      {show === "I" && (
+        <NeighboursI countries={filteredCountries} countryCodeToNameMap={countryCodeToNameMap} />
+      )}
     </section>
   )
 }
