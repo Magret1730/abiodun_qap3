@@ -28,6 +28,7 @@ function App() {
     fetchCountries();
   }, []);
 
+  // Filters out neighbouring countries based on letter
   const neighborCountryStartingWith = (letter) => {
     const filtered = countries.filter((country) => {
       if (!country.borders || country.borders.length === 0) return false;

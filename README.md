@@ -14,7 +14,7 @@ A React application that retrieves country data from a public API, filters it ba
 
 ## Development Details
 
-- **Time Taken:** 8 hours  
+- **Time Taken:** 24 hours approximately
 - **Online Resources Used:** Norman's lectures  
 - **Help from Friends:** No  
 - **Help from Instructors:** No  
